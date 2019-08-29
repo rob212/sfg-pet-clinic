@@ -2,12 +2,14 @@ package com.woita.sfgpetclinic.services.map;
 
 import com.woita.sfgpetclinic.model.Vet;
 import com.woita.sfgpetclinic.services.VetService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 /**
  * @author mcbrydr on 16/08/19
  */
+@Service
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
     @Override
     public Set<Vet> findAll() {
