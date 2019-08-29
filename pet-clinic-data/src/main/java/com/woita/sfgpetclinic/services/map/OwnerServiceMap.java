@@ -1,14 +1,14 @@
 package com.woita.sfgpetclinic.services.map;
 
 import com.woita.sfgpetclinic.model.Owner;
-import com.woita.sfgpetclinic.services.CrudService;
+import com.woita.sfgpetclinic.services.OwnerService;
 
 import java.util.Set;
 
 /**
  * @author mcbrydr on 16/08/19
  */
-public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements CrudService<Owner, Long> {
+public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
     @Override
     public Set<Owner> findAll() {
         return super.findAll();
@@ -32,5 +32,10 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
     @Override
     public Owner findById(Long id) {
         return super.findById(id);
+    }
+
+    @Override
+    public Owner findByLastName(String lastName) {
+        return null;
     }
 }

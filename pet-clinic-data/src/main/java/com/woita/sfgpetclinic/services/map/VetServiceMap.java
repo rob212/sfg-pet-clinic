@@ -1,14 +1,14 @@
 package com.woita.sfgpetclinic.services.map;
 
 import com.woita.sfgpetclinic.model.Vet;
-import com.woita.sfgpetclinic.services.CrudService;
+import com.woita.sfgpetclinic.services.VetService;
 
 import java.util.Set;
 
 /**
  * @author mcbrydr on 16/08/19
  */
-public class VetServiceMap extends AbstractMapService<Vet, Long> implements CrudService<Vet, Long> {
+public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
     @Override
     public Set<Vet> findAll() {
         return super.findAll();
