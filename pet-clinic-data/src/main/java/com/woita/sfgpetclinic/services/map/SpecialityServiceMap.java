@@ -2,6 +2,7 @@ package com.woita.sfgpetclinic.services.map;
 
 import com.woita.sfgpetclinic.model.Speciality;
 import com.woita.sfgpetclinic.services.SpecialityService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
  * @author mcbrydr on 10/09/19
  */
 @Service
+@Profile({"default", "map"})
 public class SpecialityServiceMap extends AbstractMapService<Speciality, Long> implements SpecialityService {
     @Override
     public Set<Speciality> findAll() {
