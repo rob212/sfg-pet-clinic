@@ -1,7 +1,7 @@
 package com.woita.sfgpetclinic.services.map;
 
 import com.woita.sfgpetclinic.model.Visit;
-import com.woita.sfgpetclinic.services.springdatajpa.VisitService;
+import com.woita.sfgpetclinic.services.VisitService;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;

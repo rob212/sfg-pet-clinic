@@ -1,10 +1,7 @@
 package com.woita.sfgpetclinic.bootstrap;
 
 import com.woita.sfgpetclinic.model.*;
-import com.woita.sfgpetclinic.services.OwnerService;
-import com.woita.sfgpetclinic.services.PetTypeService;
-import com.woita.sfgpetclinic.services.SpecialityService;
-import com.woita.sfgpetclinic.services.VetService;
+import com.woita.sfgpetclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +17,14 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -64,7 +63,13 @@ public class DataLoader implements CommandLineRunner {
         owner1.setCity("London");
         owner1.setTelephone("0123456789");
 
-        setupPet(savedDogPetType, owner1, "Spot");
+        Pet michaelsDog = setupPet(savedDogPetType, owner1, "Spot");
+
+        Visit dogVisit = new Visit();
+        dogVisit.setPet(michaelsDog);
+        dogVisit.setDescription("Reduced appetite");
+        dogVisit.setDate(LocalDate.now());
+        visitService.save(dogVisit);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Fiona");
@@ -95,7 +100,7 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Loaded Vets...");
     }
 
-    private void setupPet(PetType petType, Owner owner, String name) {
+    private Pet setupPet(PetType petType, Owner owner, String name) {
         Pet pet = new Pet();
         pet.setPetType(petType);
         pet.setOwner(owner);
@@ -104,5 +109,6 @@ public class DataLoader implements CommandLineRunner {
         owner.getPets().add(pet);
 
         ownerService.save(owner);
+        return pet;
     }
 }
