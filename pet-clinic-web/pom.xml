@@ -16,6 +16,7 @@
         <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
         <webjars-jquery.version>2.2.4</webjars-jquery.version>
         <wro4j.version>1.8.0</wro4j.version>
+        <junit-platform.version>1.3.2</junit-platform.version>
     </properties>
 
     <dependencies>

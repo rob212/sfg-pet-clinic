@@ -4,27 +4,42 @@ import com.woita.sfgpetclinic.model.Owner;
 import com.woita.sfgpetclinic.model.Pet;
 import com.woita.sfgpetclinic.model.PetType;
 import com.woita.sfgpetclinic.services.PetService;
+import com.woita.sfgpetclinic.services.PetTypeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 /**
  * @author mcbrydr on 11/10/19
  */
+@ExtendWith(MockitoExtension.class)
 class OwnerServiceMapTest {
 
+    @Mock
+    PetTypeService petTypeService;
+
+    @Mock
+    PetService petService;
+
+    @InjectMocks
     OwnerServiceMap ownerServiceMap;
+
     final Long ownerId = 1L;
     private String lastName = "Smith";
 
     @BeforeEach
     void setUp() {
-        ownerServiceMap = new OwnerServiceMap(new PetTypeServiceMap(), new PetServiceMap());
         ownerServiceMap.save(Owner.builder().id(ownerId).lastName(lastName).build());
     }
 
@@ -77,10 +92,13 @@ class OwnerServiceMapTest {
     }
 
     @Test
-    @Disabled
     void saveWithIdAndPet() {
+        PetType petType = PetType.builder().name("dog").build();
+        when(petTypeService.save(any())).thenReturn(petType);
+
         Long id = 2L;
-        Pet spot = Pet.builder().name("Spot").petType(PetType.builder().name("dog").build()).build();
+        Pet spot = Pet.builder().name("Spot").petType(petType).build();
+        spot.setId(id);
         Set<Pet> pets = new HashSet<>();
         pets.add(spot);
         Owner owner2 = Owner.builder().id(id).pets(pets).build();
@@ -88,6 +106,7 @@ class OwnerServiceMapTest {
 
 
         ownerServiceMap.save(owner2);
+        assertEquals(owner2, ownerServiceMap.findById(id));
     }
 
     @Test
